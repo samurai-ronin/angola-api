@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//provincia
  Route::get('/provincia','provinceController@listar');
  Route::get('/provincia/{id}','provinceController@detalhes');
  Route::post('/provincia','provinceController@addProvincia');
+ //Municpio
+ Route::post('/municipio','municipioController@addMunicipio');
