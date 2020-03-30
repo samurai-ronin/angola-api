@@ -11,37 +11,37 @@ use App\provincias;
 class provinceController extends Controller
 {
     public function listar(Request $request){
-        $pvs=new collection;
+        $provincias=new collection;
         $provinces=provincias::all();
         $resposta=['success'=>false,'data'=>$provinces];
         if (count($provinces)) {
             foreach ($provinces as $province) {
-                $pvs->push(array(
+                $provincias->push(array(
                     'id'=>$province->id,
                     'provincia'=>$province->nome,
-                    'capital'=>$province->capital,
+                    'capital'=>$this->listarCapital($province->id),
                     'extensao'=>$province->extensao,
                     'municipios'=>count($this->listarMunicipios($province->id)),
                 ));
             }
-            $resposta=['success'=>true,'data'=>$pvs];
+            $resposta=['success'=>true,'data'=>$provincias];
         }
         return response()->json($resposta);
     }
 
     public function detalhes($id){
-        $pvs=new collection;
+        $provincia=new collection;
         $province=provincias::find($id);
         $resposta=['success'=>false,'data'=>[]];
         if ($province){
-                $pvs->push(array(
+                $provincia->push(array(
                     'id'=>$province->id,
                     'provincia'=>$province->nome,
-                    'capital'=>$province->capital,
+                    'capital'=>$this->listarCapital($id),
                     'extensao'=>$province->extensao,
                     'municipios'=>$this->listarMunicipios($province->id),
                 ));
-                $resposta=['success'=>true,'data'=>$pvs];
+                $resposta=['success'=>true,'data'=>$provincia];
             }
         return response()->json($resposta);
     }
@@ -52,10 +52,17 @@ class provinceController extends Controller
         ->where('provincia_id',[$id])
         ->get();
     }
+    
+    public function listarCapital($id){
+       return DB::table('municipios')
+      # ->selectRaw('nome')
+        ->whereRaw('provincia_id=? and capital=?',[$id,true])
+        ->value('nome');
+    }
+
     public function addProvincia(Request $request){
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string',
-            'capital' => 'required|string',
             'extensao' => 'required|numeric'
         ]);
         if ($validator->fails()) {
@@ -68,7 +75,6 @@ class provinceController extends Controller
         }
         $provincia= new provincias;
         $provincia->nome=$request->input('nome');
-        $provincia->capital=$request->input('capital');
         $provincia->extensao=$request->input('extensao');
         $resposta=null;
         if ($provincia->save()) {
