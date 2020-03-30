@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
  Route::get('/provincia','provinceController@listar');
  Route::get('/provincia/{id}','provinceController@detalhes');
  Route::post('/provincia','provinceController@addProvincia');
+ Route::put('/provincia','provinceController@editProvincia');
  //Municipio
  Route::post('/municipio','municipioController@addMunicipio');
  Route::put('/municipio','municipioController@editMunicipio');

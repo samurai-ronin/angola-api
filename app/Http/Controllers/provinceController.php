@@ -55,7 +55,6 @@ class provinceController extends Controller
     
     public function listarCapital($id){
        return DB::table('municipios')
-      # ->selectRaw('nome')
         ->whereRaw('provincia_id=? and capital=?',[$id,true])
         ->value('nome');
     }
@@ -79,6 +78,30 @@ class provinceController extends Controller
         $resposta=null;
         if ($provincia->save()) {
             $resposta=['success'=>true,'data'=>'Provincia added com sucesso'];
+        }
+        return response()->json($resposta,200);
+    }
+
+    public function editProvincia(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'nome' => 'required|string',
+            'extensao' => 'required|numeric'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success'=>false,
+                'data' => [
+                    $validator->errors(),
+                ],
+            ], 401);
+        }
+        $provincia= provincias::find($request->input('id'));
+        $provincia->nome=$request->input('nome');
+        $provincia->extensao=$request->input('extensao');
+        $resposta=null;
+        if ($provincia->save()) {
+            $resposta=['success'=>true,'data'=>'Provincia editada com sucesso'];
         }
         return response()->json($resposta,200);
     }
