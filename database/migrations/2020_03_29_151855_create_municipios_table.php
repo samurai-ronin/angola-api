@@ -17,6 +17,7 @@ class CreateMunicipiosTable extends Migration
             $table->id();
             $table->string('nome');
             $table->unsignedBigInteger('provincia_id');
+            $table->boolean('capital')->nullable();
             $table->timestamps();
             $table->foreign('provincia_id')->references('id')->on('provincias');
         });
