@@ -22,6 +22,7 @@ class provinceController extends Controller
                     'capital'=>$this->listarCapital($province->id),
                     'extensao'=>$province->extensao,
                     'municipios'=>count($this->listarMunicipios($province->id)),
+                    'populacao'=>$this->populacao($province->id),
                 ));
             }
             $resposta=['success'=>true,'data'=>$provincias];
@@ -39,6 +40,7 @@ class provinceController extends Controller
                     'provincia'=>$province->nome,
                     'capital'=>$this->listarCapital($id),
                     'extensao'=>$province->extensao,
+                    'populacao'=>$this->populacao($province->id),
                     'municipios'=>$this->listarMunicipios($province->id),
                 ));
                 $resposta=['success'=>true,'data'=>$provincia];
@@ -57,6 +59,12 @@ class provinceController extends Controller
        return DB::table('municipios')
         ->whereRaw('provincia_id=? and capital=?',[$id,true])
         ->value('nome');
+    }
+
+    public function populacao($id){
+       return DB::table('municipios')
+        ->whereRaw('provincia_id=?',[$id])
+        ->sum('populacao');
     }
 
     public function addProvincia(Request $request){
