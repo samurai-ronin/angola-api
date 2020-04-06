@@ -48,7 +48,7 @@ class provinceController extends Controller
 
     public function listarMunicipios($id){
        return DB::table('municipios')
-       ->selectRaw('id,nome')
+       ->selectRaw('id,nome,populacao')
         ->where('provincia_id',[$id])
         ->get();
     }

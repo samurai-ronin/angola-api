@@ -14,6 +14,7 @@ class municipioController extends Controller
             'nome' => 'required|string',
             'provincia_id' => 'required|numeric',
             'capital' => 'required|boolean',
+            'populacao' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -27,6 +28,7 @@ class municipioController extends Controller
         $municipio->nome=$request->input('nome');
         $municipio->provincia_id=$request->input('provincia_id');
         $municipio->capital=$request->input('capital');
+        $municipio->populacao= $request->input('populacao');
         $resposta=['success'=>false,'data'=>''];
         if ($municipio->save()) {
             $resposta=['success'=>true,'data'=>'municipio added com sucesso'];
@@ -40,6 +42,7 @@ class municipioController extends Controller
             'nome' => 'required|string',
             'provincia_id' => 'required|numeric',
             'capital' => 'required|boolean',
+            'populacao' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -53,6 +56,7 @@ class municipioController extends Controller
         $municipio->nome=$request->input('nome');
         $municipio->provincia_id=$request->input('provincia_id');
         $municipio->capital=$request->input('capital');
+        $municipio->populacao=$request->input('populacao');
         $resposta=['success'=>false,'data'=>''];
         if ($municipio->save()) {
             $resposta=['success'=>true,'data'=>'municipio editado com sucesso'];
