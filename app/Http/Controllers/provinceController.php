@@ -22,7 +22,7 @@ class provinceController extends Controller
                     'capital'=>$this->listarCapital($province->id),
                     'extensao'=>$province->extensao,
                     'municipios'=>count($this->listarMunicipios($province->id)),
-                    'populacao'=>$this->populacao($province->id),
+                    'populacao'=>intval($this->populacao($province->id)),
                 ));
             }
             $resposta=['success'=>true,'data'=>$provincias];
@@ -40,7 +40,7 @@ class provinceController extends Controller
                     'provincia'=>$province->nome,
                     'capital'=>$this->listarCapital($id),
                     'extensao'=>$province->extensao,
-                    'populacao'=>$this->populacao($province->id),
+                    'populacao'=>intval($this->populacao($province->id)),
                     'municipios'=>$this->listarMunicipios($province->id),
                 ));
                 $resposta=['success'=>true,'data'=>$provincia];
