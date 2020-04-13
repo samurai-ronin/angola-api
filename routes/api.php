@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 //provincia
  Route::get('/provincia','provinceController@listar');
  Route::get('/provincia/{id}','provinceController@detalhes');
-
+//municipio
+ Route::get('/municipio','municipioController@listarTodosMunicipios');
+ 
  Route::middleware('apiKey')->group(function () {
      //provincia
     Route::post('/provincia','provinceController@addProvincia');

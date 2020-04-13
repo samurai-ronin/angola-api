@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Validator;
 use App\municipios;
+use App\provincias;
+use App\comuna;
 
 class municipioController extends Controller
 {
@@ -63,4 +66,32 @@ class municipioController extends Controller
         }
         return response()->json($resposta,200);
     }
+
+    public function listarTodosMunicipios(){
+        $municipios=new collection;
+        $getMunicipios=municipios::all();
+        $resposta=['success'=>false,'data'=>$municipios];
+        if (count($getMunicipios)) {
+            foreach ($getMunicipios as $municipio) {
+                $municipios->push(array(
+                    'id'=>$municipio->id,
+                    'municipio'=>$municipio->nome,
+                    'populacao'=>$municipio->populacao,
+                    'comunas'=>count($this->comunas($municipio->id)),
+                   # 'provincia'=>$this->listarProvincia($municipio->provincia_id),
+                ));
+            }
+            $resposta=['success'=>true,'data'=>$municipios];
+        }
+        return response()->json($resposta);
+    }
+
+    public function listarProvincia($id){
+        return provincias::where('id',[$id])
+         ->value('nome');
+     }
+    public function comunas($id){
+        return comuna::whereRaw('municipio_id=?',[$id])
+         ->get();
+     }
 }
