@@ -24,4 +24,6 @@ use Illuminate\Support\Facades\Route;
     //Municipio
     Route::post('/municipio','municipioController@addMunicipio');
     Route::put('/municipio','municipioController@editMunicipio');
+    //Comuna
+    Route::post('/comuna','comunaController@addComuna');
 });
