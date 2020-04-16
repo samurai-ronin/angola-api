@@ -92,7 +92,7 @@ class provinceController extends Controller
 
     public function editProvincia(Request $request){
         $validator = Validator::make($request->all(), [
-            'id' => 'required|numeric',
+            'id' => 'required',
             'nome' => 'required|string',
             'extensao' => 'required|numeric'
         ]);

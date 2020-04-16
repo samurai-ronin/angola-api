@@ -12,7 +12,7 @@ class comunaController extends Controller
     public function addComuna(Request $request){
         $validator = Validator::make($request->all(), [
             'comuna' => 'required|string',
-            'municipio_id' => 'required|numeric',
+            'municipio_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([

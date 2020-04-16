@@ -15,7 +15,7 @@ class municipioController extends Controller
     public function addMunicipio(Request $request){
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string',
-            'provincia_id' => 'required|numeric',
+            'provincia_id' => 'required',
             'capital' => 'required|boolean',
             'populacao' => 'required|integer',
         ]);
@@ -41,9 +41,9 @@ class municipioController extends Controller
 
     public function editMunicipio(Request $request){
         $validator = Validator::make($request->all(), [
-            'id' => 'required|numeric',
+            'id' => 'required',
             'nome' => 'required|string',
-            'provincia_id' => 'required|numeric',
+            'provincia_id' => 'required',
             'capital' => 'required|boolean',
             'populacao' => 'required|integer',
         ]);
